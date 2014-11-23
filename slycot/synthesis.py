@@ -860,12 +860,12 @@ def sb03md(n,C,A,U,dico,job='X',fact='N',trana='N',ldwork=None):
         raise e
     if out[-1] == n+1:
         if dico == 'D':
-            error_text = 'The matrix A has eigenvalues that are almost reciprocal.'
+            warning_text = ('The matrix A has eigenvalues that are almost reciprocal.'
+                            'The Lyapunov equation was solved through perturbation.')
         else:
-            error_text = 'The matrix A and -A have common or very close eigenvalues.'
-        e = ValueError(error_text)
-        e.info = out[-1]
-        raise e
+            warning_text = ('The matrix A and -A have common or very close eigenvalues.'
+                            'The Lyapunov equation was solved through perturbation.')
+        warnings.warn(warning_text, stacklevel=2)
     else:
         if out[-1] > 0:
             error_text = """The QR algorithm failed to compute all the eigenvalues
